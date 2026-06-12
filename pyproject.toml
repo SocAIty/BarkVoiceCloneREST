@@ -15,7 +15,7 @@ authors = [
 license = {file = "LICENSE"}
 
 dependencies = [
-    "media-toolkit[AudioFile]>=00.02.08",
+    "apipod>=1.0.5",
     "encodec",
     "fairseq==0.12.2",
     "boto3",
@@ -35,13 +35,7 @@ dependencies = [
 source = "https://github.com/SocAIty/SpeechCraft"
 
 [project.optional-dependencies]
-full = [
-    "fastapi",
-    "fast-task-api>=1.1.9"
-]
 dev = [
-    "fastapi",
-    "fast-task-api>=1.1.9",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0"
 ]

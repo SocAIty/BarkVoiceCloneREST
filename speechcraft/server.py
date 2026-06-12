@@ -7,24 +7,19 @@ from speechcraft import VoiceEmbedding
 
 from speechcraft.settings import ALLOW_EMBEDDING_SAVE_ON_SERVER
 
-try:
-    from fast_task_api import FastTaskAPI, JobProgress, AudioFile, MediaFile
-except ImportError:
-    raise ImportError(
-        "Please install the full version of speechcraft with pip install speechcraft[full]"
-        " to use the server functionality."
-    )
+from apipod import APIPod, JobProgress, AudioFile, MediaFile
+
 
 import speechcraft as t2v
 from speechcraft.supp.model_downloader import download_all_models_init
 
 from speechcraft.supp.utils import encode_path_safe
 
-app = FastTaskAPI(
+app = APIPod(
     title="SpeechCraft",
     summary="Create audio from text, clone voices and use them. Convert voice2voice. "
             "Generative text-to-audio Bark model.",
-    version="0.0.15",
+    version="0.0.16",
     contact={
         "name": "SocAIty",
         "url": "https://github.com/SocAIty/speechcraft",
@@ -32,7 +27,7 @@ app = FastTaskAPI(
 )
 
 
-@app.task_endpoint(path="/text2voice")
+@app.endpoint(path="/text2voice")
 def text2voice(
         job_progress: JobProgress,
         text: str,
@@ -92,11 +87,11 @@ def text2voice(
     filename = text[:15] if len(text) > 15 else text
     filename = encode_path_safe(filename)
     filename = f"{filename}_{voice_name}.wav"
-    af = AudioFile(file_name=filename).from_np_array(np_array=generated_audio_file, sr=sample_rate, file_type="wav")
+    af = AudioFile(file_name=filename).from_np_array(np_array=generated_audio_file, sample_rate=sample_rate, audio_format="wav")
     return af
 
 
-@app.task_endpoint("/voice2embedding")
+@app.endpoint("/voice2embedding")
 def voice2embedding(
         job_progress: JobProgress,
         audio_file: AudioFile,
@@ -124,7 +119,7 @@ def voice2embedding(
     return mf
 
 
-@app.task_endpoint("/voice2voice")
+@app.endpoint("/voice2voice")
 def voice2voice(
         job_progress: JobProgress,
         audio_file: AudioFile,
@@ -149,8 +144,8 @@ def voice2voice(
     # convert to file
     af = AudioFile(file_name=f"voice2voice_{voice_name}.wav").from_np_array(
         np_array=audio_array,
-        sr=sample_rate,
-        file_type="wav"
+        sample_rate=sample_rate,
+        audio_format="wav"
     )
 
     return af

@@ -55,12 +55,8 @@ audio.save("i_love_socaity.wav")
 ### Or install locally with PIP
 
 ```bash
-# from PyPi (without web API)
+# from PyPi
 pip install speechcraft
-# with web API
-pip install speechcraft[full]
-# or from GitHub for the newest version.
-pip install git+https://github.com/SocAIty/speechcraft
 ```
 
 To use a GPU don't forget to install [pytorch GPU](https://pytorch.org/get-started/locally/) with your correct 
@@ -113,7 +109,7 @@ cloned_audio = voice2voice(audio_file="my_audio_file.wav", voice_name_or_embeddi
 Use the following code to convert and save the audio file with the [media-toolkit](https://github.com/SocAIty/media-toolkit) module.
 ```python
 from media_toolkit import AudioFile
-audio = AudioFile().from_np_array(audio_numpy, sr=sample_rate)
+audio = AudioFile().from_np_array(audio_numpy, sample_rate=sample_rate)
 audio.save("my_new_audio.wav")
 ```
 

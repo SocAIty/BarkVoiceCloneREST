@@ -34,7 +34,7 @@ def test_text2voice(sample_text, output_dir):
     audio_numpy, sample_rate = text2voice(sample_text)
     assert audio_numpy is not None
 
-    audio = AudioFile().from_np_array(audio_numpy, sr=sample_rate)
+    audio = AudioFile().from_np_array(audio_numpy, sample_rate=sample_rate)
     assert audio is not None
     output_path = f"{output_dir}/en_speaker_3_i_love_socaity.wav"
 
@@ -50,7 +50,7 @@ def test_voice2embedding(input_dir, output_dir):
     tts_new_speaker, sample_rate = text2voice("Test text", voice="hermine")
     assert tts_new_speaker is not None
 
-    audio_with_cloned_voice = AudioFile().from_np_array(tts_new_speaker, sr=sample_rate)
+    audio_with_cloned_voice = AudioFile().from_np_array(tts_new_speaker, sample_rate=sample_rate)
     assert audio_with_cloned_voice is not None
     output_path = f"{output_dir}/hermine_i_love_socaity.wav"
     audio_with_cloned_voice.save(output_path)
@@ -61,7 +61,7 @@ def test_voice2voice(input_dir, output_dir):
     v2v_audio_np, sample_rate = voice2voice(audio_file=f"{input_dir}/voice_clone_test_voice_2.wav", voice_name="hermine")
     assert v2v_audio_np is not None
 
-    v2v_audio = AudioFile().from_np_array(v2v_audio_np, sr=sample_rate)
+    v2v_audio = AudioFile().from_np_array(v2v_audio_np, sample_rate=sample_rate)
     output_path = f"{output_dir}/potter_to_hermine.wav"
     v2v_audio.save(output_path)
     assert os.path.exists(output_path)
